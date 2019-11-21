@@ -45,10 +45,23 @@ class Frontend
       2 => "en",
       3 => true
     }
-    until choice_hash[ch].include?(3) || choice_hash[ch].include?(0) || choice
 
-      print_arr(choices, ch)
+    chosen = []
+    until chosen.include?(3) || chosen.include?(0) || chosen.length > 2
+      print_arr(choices, chosen)
+      ch = gets.to_i
+      chosen += [ch]
     end
+    if chosen.include?(3)
+      return choice_hash[3]
+    elsif chosen.include?(0)
+      ret = []
+      for i in chosen.length-1
+
+        # Fix returning chosen languages, check with api console what params to send with lang for multiple langs
+
+        ret += [choice_hash[chosen]]
+      return choice_hash[chosen]
   end
 
   def spec_Article_group
