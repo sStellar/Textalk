@@ -1,0 +1,63 @@
+using format "%s"
+[libi3] ../i3-4.17.1/../i3-4.17.1/libi3/font.c Using Pango font monospace, size 8
+expose!
+Keypress 38, state raw = 0
+is_keypad_key = 0
+is_private_keypad_key = 0
+xcb_is_cursor_key = 0
+xcb_is_pf_key = 0
+xcb_is_function_key = 0
+xcb_is_misc_function_key = 0
+xcb_is_modifier_key = 0
+sym = a (97)
+inp.byte1 = 00, inp.byte2 = 61
+converted to a
+expose!
+releasing 38, state raw = 0
+Keypress 38, state raw = 0
+is_keypad_key = 0
+is_private_keypad_key = 0
+xcb_is_cursor_key = 0
+xcb_is_pf_key = 0
+xcb_is_function_key = 0
+xcb_is_misc_function_key = 0
+xcb_is_modifier_key = 0
+sym = a (97)
+inp.byte1 = 00, inp.byte2 = 61
+converted to a
+expose!
+releasing 38, state raw = 0
+Keypress 38, state raw = 0
+is_keypad_key = 0
+is_private_keypad_key = 0
+xcb_is_cursor_key = 0
+xcb_is_pf_key = 0
+xcb_is_function_key = 0
+xcb_is_misc_function_key = 0
+xcb_is_modifier_key = 0
+sym = a (97)
+inp.byte1 = 00, inp.byte2 = 61
+converted to a
+expose!
+releasing 38, state raw = 0
+Keypress 38, state raw = 0
+is_keypad_key = 0
+is_private_keypad_key = 0
+xcb_is_cursor_key = 0
+xcb_is_pf_key = 0
+xcb_is_function_key = 0
+xcb_is_misc_function_key = 0
+xcb_is_modifier_key = 0
+sym = a (97)
+inp.byte1 = 00, inp.byte2 = 61
+converted to a
+expose!
+releasing 38, state raw = 0
+Keypress 36, state raw = 0
+at a
+at a
+at a
+at a
+output = aaaa
+occurrences = 1
+command = aaaa

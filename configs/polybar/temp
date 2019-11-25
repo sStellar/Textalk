@@ -1,0 +1,10 @@
+
+bar-foreground-0 = #670067
+bar-foreground-1 = #800080
+bar-foreground-2 = #9a009a
+bar-foreground-3 = #b300b3
+bar-foreground-4 = #cd00cd
+bar-gradient = false
+bar-indicator-font = 2
+bar-fill-font = 2
+bar-empty-font = 2
