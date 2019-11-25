@@ -56,6 +56,7 @@ class Frontend
       return choice_hash[3]
     elsif chosen.include?(0)
       ret = []
+      chosen -= [0]
       for i in chosen.length-1
 
         # Fix returning chosen languages, check with api console what params to send with lang for multiple langs
