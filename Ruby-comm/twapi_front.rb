@@ -1,4 +1,7 @@
 require_relative "twapi_back"
+require_relative "print_h"
+require_relative "del_key_value"
+
 
 class Frontend
   def initialize
@@ -10,7 +13,7 @@ class Frontend
     }
   end
 
-  def clear_screen()
+  def clear
     system('cls')
     system('clear')
   end
@@ -30,48 +33,80 @@ class Frontend
   end
 
   def spec_Name_lang()
+    clear
     ch = ""
     choices = [
       "Please select a language:",
       "[1] Swedish",
       "[2] English (unavailable)",
       "[3] All",
-      "[0] Done",
-      "Chosen languages: [%s]",
-      "Enter selection:"
+      "Choose one:"
     ]
     choice_hash = {
       1 => "sv",
-      2 => "en",
+      2 => true, # true for now, english isnt an option as none of the articles have a name in english, only swedish
       3 => true
     }
 
+    # No case handling because there will only be swedish, so only 1 option is available
+
+    print_arr(choices)
+    ch = gets.to_i
+    return choice_hash[ch]
+  end
+
+  def spec_Article_group()
+    clear
+    #puts "art gr past clear"
+    ch = ""
     chosen = []
-    until chosen.include?(3) || chosen.include?(0) || chosen.length > 2
+    choices = [
+      "Please select article group info",
+      "[1] Group name",
+      "[2] Group base name",
+      "[3] Group id",
+      "[4] Group description",
+      "[5] Link to group",
+      "[6] Hidden?",
+      "[7] All",
+      "[0] Done",
+      "Chosen paramters: %s",
+      "Choose paramter:"
+    ]
+    choice_hash = {
+      1 => "name",
+      2 => "baseName",
+      3 => "uid",
+      4 => "description",
+      5 => "url",
+      6 => "hidden"
+    }
+
+    until chosen.include?(7) || chosen.include?(0) || chosen.length >= 6
+      clear
       print_arr(choices, chosen)
       ch = gets.to_i
       chosen += [ch]
     end
-    if chosen.include?(3)
-      return choice_hash[3]
-    elsif chosen.include?(0)
-      ret = []
-      chosen -= [0]
-      for i in chosen.length-1
 
-        # Fix returning chosen languages, check with api console what params to send with lang for multiple langs
+    index = 0
+    while index < chosen.length
+      case chosen[index]
+      when 7
+        return {}
+      when 0
+        chosen -= [0]
+      else
+        chosen[index] = choice_hash[chosen[index]]
+      end
 
-        ret += [choice_hash[chosen]]
-      return choice_hash[chosen]
-  end
-
-  def spec_Article_group
-
-
+      index += 1
+    end
+    return chosen
   end
 
   def start_menu()
-    clear_screen()
+    clear
     choice_hash = {
       1 => "article_get",
       2 => "article_count",
@@ -93,7 +128,7 @@ class Frontend
   end
 
   def article_get()
-    clear_screen()
+    clear
     payload = @temp_json.dup
     payload["method"] = "Article.get"
     params = []
@@ -122,9 +157,8 @@ class Frontend
     uid = 172139951
     params += [uid]
 
-
     until chosen.include?(4) || chosen.include?(0) || chosen.length >= 3
-      clear_screen()
+      clear
       print_arr(available_params, uid, chosen)
       choice = gets.to_i
       chosen += [choice]
@@ -145,51 +179,31 @@ class Frontend
       when 2
         temp_param_str.merge!({"articleNumber" => true})
       when 3
-        #articlegroup = spec_Article_group()
-        temp_param_str.merge!({"articlegroup" => {}})
+        articlegroup = spec_Article_group()
+        temp_param_str.merge!({"articlegroup" => articlegroup})
       when 0
         chosen -= [0]
+        break
       end
       chosen_index += 1
     end
     params = [uid, temp_param_str]
-=begin
-    temp_param_str = {}
-    if chosen.include?(4)
-      params = [uid, {"name" => true, "articleNumber" => true, "articlegroup" => {}}]
-    else
-      for i in 0..chosen.length
-        if chosen[i] == 0
-          chosen -= [0]
-        else
-          unless chosen[i] == nil
-            #temp_param_str[chosen[i]] = param_hash[chosen[i]]
-            temp_param_str = temp_param_str.merge(param_hash[chosen[i]])
-          end
-        end
-      end
-      #p temp_param_str
-      #temp_param_str = temp_param_str.include?("}{") ? temp_param_str.gsub("}{", ",") : temp_param_str
-      #temp_param_str.gsub!('\"', '"')
-    end
 
-    puts "Temp Param Str:"
-    p temp_param_str
-    puts "Chosen:"
-    p chosen
-    puts "Params:"
-    p params
-=end
 
     payload["params"] = params
     return payload
   end
 end
 
-x = Frontend.new
-x.clear_screen
-# p x.article_get
 r = Twapi.new
-x.start_menu
-result = r.sendToApi(x.article_get)
-puts JSON.parse(result)
+x = Frontend.new
+running = true
+while running
+  x.clear
+  x.start_menu
+  result = r.sendToApi(x.article_get)
+  result = JSON.parse(result)
+  result = result.without("jsonrpc","id")
+  print_h(result)
+  gets
+end

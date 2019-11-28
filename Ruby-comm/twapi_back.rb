@@ -4,7 +4,7 @@ require 'json'
 
 class Twapi
   def initialize
-    @uri = URI("https://shop.textalk.se/backend/jsonrpc/v1/?webshop=92323&auth=YXV0aDpWEMLwfmEfSpy5IztDVuyGa7MvXWzGpqI7d8fKllP/04QH&session=d1920be29bf84588940e7cca9309fe63")
+    @uri = URI("https://shop.textalk.se/backend/jsonrpc/v1/?webshop=92323&auth=cGV0ZXIuYWxuYXNAZWxldi5nYS5udGlnLnNlOzE1NzQ3NTgzNDQ7MGUwNDJkZDgxMTAwMTVmMzI1NzA5NGZhNzhkNDA1OWI=&session=9817339f65a74353ab69f315dc4b091a")
 
   end
 
@@ -13,7 +13,6 @@ class Twapi
     req.body = payload.to_json
     http = Net::HTTP.new(@uri.hostname, @uri.port)
     http.use_ssl = true
-    puts req.body
     result = http.request(req)
     return result.body
   end
