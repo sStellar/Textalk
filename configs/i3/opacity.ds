@@ -1,0 +1,12 @@
+( if
+( contains (window_class) "Atom" )
+( begin
+( spawn_async (str "transset-df -i " (window_xid) " 0.9" ))
+)
+)
+( if
+( contains (window_class) "URxvt" )
+( begin
+( spawn_async (str "transset-df -i " (window_xid) " 0.75" ))
+)
+)
